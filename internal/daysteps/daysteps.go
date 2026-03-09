@@ -2,6 +2,7 @@ package daysteps
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -54,7 +55,7 @@ func DayActionInfo(data string, weight, height float64) string {
 	// В случае возникновения ошибки вывести её на экран и вернуть пустую строку.
 	steps, duration, err := parsePackage(data)
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Println(err.Error())
 		return ""
 	}
 	//Проверить, чтобы количество шагов было больше 0. В противном случае вернуть пустую строку.
@@ -70,7 +71,7 @@ func DayActionInfo(data string, weight, height float64) string {
 	// Функция для вычисления калорий WalkingSpentCalories() будет определена в пакете spentcalories, которую вы тоже реализуете.
 	calories, err := spentcalories.WalkingSpentCalories(steps, weight, height, duration)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err.Error())
 		return ""
 	}
 	//Сформировать строку, которую будете возвращать, пример которой был представлен выше.
