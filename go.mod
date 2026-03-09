@@ -1,4 +1,5 @@
-module github.com/Yandex-Practicum/tracker
+//module github.com/Yandex-Practicum/tracker
+module github.com/Mandelshtam21/fitness-tracker
 
 go 1.24.1
 
