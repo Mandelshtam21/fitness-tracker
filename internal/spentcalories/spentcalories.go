@@ -82,6 +82,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 	steps, activity, duration, err := parseTraining(data)
 	if err != nil {
 		log.Println(err)
+		return "", err
 	}
 	// Проверить, какой вид тренировки был передан в строке, которую парсили (лучше использовать switch).
 	// Для каждого из видов тренировки рассчитать дистанцию, среднюю скорость и калории.
@@ -94,16 +95,18 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 		calories, err := WalkingSpentCalories(steps, weight, height, duration)
 		if err != nil {
 			log.Println(err)
+			return "", err
 		}
-		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f", activity, duration.Hours(), dist, speed, calories), nil
+		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", activity, duration.Hours(), dist, speed, calories), nil
 	case "Бег":
 		dist := distance(steps, height)
 		speed := meanSpeed(steps, height, duration)
 		calories, err := RunningSpentCalories(steps, weight, height, duration)
 		if err != nil {
 			log.Println(err)
+			return "", err
 		}
-		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f", activity, duration.Hours(), dist, speed, calories), nil
+		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", activity, duration.Hours(), dist, speed, calories), nil
 	default:
 		return "", fmt.Errorf("Неизвестный тип тренировки")
 	}

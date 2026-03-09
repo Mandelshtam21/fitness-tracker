@@ -41,6 +41,9 @@ func parsePackage(data string) (int, time.Duration, error) {
 	if err != nil {
 		return 0, 0, err
 	}
+	if duration <= 0 {
+		return 0, 0, fmt.Errorf("Продолжительность должна быть больше 0")
+	}
 	// Если всё прошло без ошибок, верните количество шагов, продолжительность и nil (для ошибки).
 	return steps, duration, nil
 }
@@ -51,11 +54,11 @@ func DayActionInfo(data string, weight, height float64) string {
 	// В случае возникновения ошибки вывести её на экран и вернуть пустую строку.
 	steps, duration, err := parsePackage(data)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
 		return ""
 	}
 	//Проверить, чтобы количество шагов было больше 0. В противном случае вернуть пустую строку.
-	if steps <= 0 {
+	if steps <= 0 || duration <= 0 {
 		return ""
 	}
 	// Вычислить дистанцию в метрах. Дистанция равна произведению количества шагов на длину шага.
@@ -71,5 +74,5 @@ func DayActionInfo(data string, weight, height float64) string {
 		return ""
 	}
 	//Сформировать строку, которую будете возвращать, пример которой был представлен выше.
-	return fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.", steps, distanceKm, calories)
+	return fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n", steps, distanceKm, calories)
 }
