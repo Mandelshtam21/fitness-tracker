@@ -32,12 +32,18 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 	if err != nil {
 		return 0, "", 0, err
 	}
+	if steps <= 0 {
+		return 0, "", 0, fmt.Errorf("Количество шагов должно быть больше 0")
+	}
 	// Преобразовать третий элемент слайса в time.Duration.
 	// В пакете time есть метод для парсинга строки в time.Duration. Обработать возможные ошибки.
 	// При их возникновении из функции вернуть 0 шагов, 0 продолжительность и ошибку.
 	duration, err := time.ParseDuration(parts[2])
 	if err != nil {
 		return 0, "", 0, err
+	}
+	if duration <= 0 {
+		return 0, "", 0, fmt.Errorf("Продолжительность должна быть больше 0")
 	}
 	// Если всё прошло без ошибок, верните количество шагов, вид активности, продолжительность и nil (для ошибки).
 	return steps, parts[1], duration, nil
